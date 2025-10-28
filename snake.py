@@ -38,8 +38,8 @@ snake_direction = DIRECTION_RIGHT
 
 food_cell = Vector2(3,3)
 
-snake_wait_duration = 0.1
-snake_wait_timer = snake_wait_duration
+snake_wait_to_move_duration = 0.1
+snake_wait_to_move_timer = snake_wait_to_move_duration
 
 def reset_snake_state():
     global snake_cells
@@ -83,7 +83,7 @@ while not window_should_close():
             game_state = GAME_STATE_PLAY
 
     elif game_state == GAME_STATE_PLAY:
-        snake_wait_timer -= dt
+        snake_wait_to_move_timer -= dt
 
         if (is_key_down(KEY_LEFT) or is_key_down(KEY_A)):
             snake_direction_request = DIRECTION_LEFT
@@ -110,9 +110,10 @@ while not window_should_close():
             game_over_timer = game_over_duration
             continue
 
-        is_snake_wait_timer_complete = snake_wait_timer <= 0
-        if is_snake_wait_timer_complete:
-            snake_wait_timer = snake_wait_duration
+        is_snake_wait_to_move_timer_complete = snake_wait_to_move_timer <= 0
+        if is_snake_wait_to_move_timer_complete:
+
+            snake_wait_to_move_timer = snake_wait_to_move_duration
 
             next_cell = Vector2(0,0)
 
@@ -140,7 +141,10 @@ while not window_should_close():
 
             will_snake_eat_food_at_next_cell = next_cell.x == food_cell.x and next_cell.y == food_cell.y
 
-            win = will_snake_eat_food_at_next_cell and len(snake_cells) >= grid_cells_total - 1
+            will_the_snake_fill_up_the_entire_screen = len(snake_cells) >= grid_cells_total - 1
+
+            win = will_snake_eat_food_at_next_cell and will_the_snake_fill_up_the_entire_screen
+
             if win:
                 reset_snake_state()
                 game_state = GAME_STATE_MAIN_MENU
@@ -186,6 +190,7 @@ while not window_should_close():
 
         food_cell_rectangle = Rectangle(food_cell.x * grid_cell_size, food_cell.y * grid_cell_size, grid_cell_size, grid_cell_size)
         draw_rectangle_rec(food_cell_rectangle, RED)
+        
     elif game_state == GAME_STATE_GAMEOVER:
         game_over_timer -= dt
         if game_over_timer <= 0:
