@@ -51,6 +51,10 @@ set_target_fps(60)
 init_window(window_size, window_size, "Snake - Hackers Guild PGH")
 
 def reset_snake_state():
+    global snake_cells
+    global food_cell
+    global snake_direction 
+    
     snake_cells.clear()
     snake_cells = [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
 
@@ -66,8 +70,6 @@ def reset_snake_state():
     food_cell = Vector2(3,3)
     snake_direction = DIRECTION_RIGHT
 
-    game_state = GAME_STATE_GAMEOVER
-    game_over_timer = game_over_duration
 
 
 while not window_should_close():
@@ -107,21 +109,7 @@ while not window_should_close():
         game_over = is_snake_head_colliding_with_tail or is_snake_out_of_bounds
 
         if game_over:
-            snake_cells.clear()
-            snake_cells = [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
-
-            snake_cells[0].x = 0
-            snake_cells[0].y = 3
-
-            snake_cells[1].x = 1
-            snake_cells[1].y = 3
-
-            snake_cells[2].x = 2
-            snake_cells[2].y = 3
-
-            food_cell = Vector2(3,3)
-            snake_direction = DIRECTION_RIGHT
-
+            reset_snake_state()
             game_state = GAME_STATE_GAMEOVER
             game_over_timer = game_over_duration
             continue
@@ -149,22 +137,7 @@ while not window_should_close():
 
             win = will_snake_eat_food_at_next_cell and len(snake_cells) >= grid_cells_total - 1
             if win:
-                snake_cells.clear()
-                snake_cells = [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
-
-                snake_cells[0].x = 0
-                snake_cells[0].y = 3
-
-                snake_cells[1].x = 1
-                snake_cells[1].y = 3
-
-                snake_cells[2].x = 2
-                snake_cells[2].y = 3
-
-                snake_direction = DIRECTION_RIGHT
-
-
-                food_cell = Vector2(3,3)
+                reset_snake_state()
             else:
                 if will_snake_eat_food_at_next_cell:
                     snake_cells.append(Vector2(food_cell.x, food_cell.y))
