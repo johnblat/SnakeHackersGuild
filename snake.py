@@ -4,7 +4,7 @@ from pyray import *
 
 window_size = 640
 
-grid_side_cells_count = 8
+grid_side_cells_count = 16
 grid_cell_size = window_size / grid_side_cells_count
 grid_cells_total = grid_side_cells_count * grid_side_cells_count
 
@@ -33,11 +33,12 @@ snake_cells[1].y = 3
 snake_cells[2].x = 2
 snake_cells[2].y = 3
 
+snake_direction_request = DIRECTION_RIGHT
 snake_direction = DIRECTION_RIGHT
 
 food_cell = Vector2(3,3)
 
-snake_wait_duration = 0.2
+snake_wait_duration = 0.1
 snake_wait_timer = snake_wait_duration
 
 def reset_snake_state():
@@ -84,14 +85,14 @@ while not window_should_close():
     elif game_state == GAME_STATE_PLAY:
         snake_wait_timer -= dt
 
-        if is_key_down(KEY_LEFT) and snake_direction != DIRECTION_RIGHT:
-            snake_direction = DIRECTION_LEFT
-        if is_key_down(KEY_RIGHT) and snake_direction != DIRECTION_LEFT:
-            snake_direction = DIRECTION_RIGHT
-        if is_key_down(KEY_UP) and snake_direction != DIRECTION_DOWN:
-            snake_direction = DIRECTION_UP
-        if is_key_down(KEY_DOWN) and snake_direction != DIRECTION_UP:
-            snake_direction = DIRECTION_DOWN
+        if (is_key_down(KEY_LEFT) or is_key_down(KEY_A)):
+            snake_direction_request = DIRECTION_LEFT
+        if (is_key_down(KEY_RIGHT) or is_key_down(KEY_D)):
+            snake_direction_request = DIRECTION_RIGHT
+        if (is_key_down(KEY_UP) or is_key_down(KEY_W)):
+            snake_direction_request = DIRECTION_UP
+        if (is_key_down(KEY_DOWN) or is_key_down(KEY_S)):
+            snake_direction_request = DIRECTION_DOWN
 
         is_snake_out_of_bounds = snake_cells[snake_head_index()].x >= grid_side_cells_count or snake_cells[snake_head_index()].x < 0 or snake_cells[snake_head_index()].y < 0 or snake_cells[snake_head_index()].y >= grid_side_cells_count
 
@@ -115,6 +116,15 @@ while not window_should_close():
 
             next_cell = Vector2(0,0)
 
+            if snake_direction_request == DIRECTION_RIGHT and snake_direction != DIRECTION_LEFT:
+                snake_direction = snake_direction_request
+            elif snake_direction_request == DIRECTION_LEFT and snake_direction != DIRECTION_RIGHT:
+                snake_direction = snake_direction_request
+            elif snake_direction_request == DIRECTION_DOWN and snake_direction != DIRECTION_UP:
+                snake_direction = snake_direction_request
+            elif snake_direction_request == DIRECTION_UP and snake_direction != DIRECTION_DOWN:
+                snake_direction = snake_direction_request
+
             if snake_direction == DIRECTION_RIGHT:
                 next_cell.x = snake_cells[snake_head_index()].x + 1
                 next_cell.y = snake_cells[snake_head_index()].y
@@ -133,6 +143,7 @@ while not window_should_close():
             win = will_snake_eat_food_at_next_cell and len(snake_cells) >= grid_cells_total - 1
             if win:
                 reset_snake_state()
+                game_state = GAME_STATE_MAIN_MENU
             else:
                 if will_snake_eat_food_at_next_cell:
                     snake_cells.append(Vector2(food_cell.x, food_cell.y))
