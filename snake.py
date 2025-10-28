@@ -1,7 +1,6 @@
 from pyray import *
 
-def snake_head_index():
-    return len(snake_cells) - 1
+
 
 window_size = 640
 
@@ -62,11 +61,12 @@ def reset_snake_state():
     snake_direction = DIRECTION_RIGHT
 
 
+def snake_head_index():
+    return len(snake_cells) - 1
+
 
 set_target_fps(60)
 init_window(window_size, window_size, "Snake - Hackers Guild PGH")
-
-
 
 while not window_should_close():
 
