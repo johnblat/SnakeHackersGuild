@@ -1,6 +1,5 @@
 from pyray import *
 
-
 def snake_head_index():
     return len(snake_cells) - 1
 
@@ -9,8 +8,6 @@ window_size = 640
 grid_side_cells_count = 8
 grid_cell_size = window_size / grid_side_cells_count
 grid_cells_total = grid_side_cells_count * grid_side_cells_count
-
-
 
 DIRECTION_UP: int = 0
 DIRECTION_DOWN: int = 1
@@ -26,8 +23,6 @@ game_over_timer = 0.0
 
 game_state = GAME_STATE_MAIN_MENU
 
-
-
 snake_cells = [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
 
 snake_cells[0].x = 0
@@ -39,7 +34,6 @@ snake_cells[1].y = 3
 snake_cells[2].x = 2
 snake_cells[2].y = 3
 
-
 snake_direction = DIRECTION_RIGHT
 
 food_cell = Vector2(3,3)
@@ -47,14 +41,11 @@ food_cell = Vector2(3,3)
 snake_wait_duration = 0.2
 snake_wait_timer = snake_wait_duration
 
-set_target_fps(60)
-init_window(window_size, window_size, "Snake - Hackers Guild PGH")
-
 def reset_snake_state():
     global snake_cells
     global food_cell
     global snake_direction 
-    
+
     snake_cells.clear()
     snake_cells = [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
 
@@ -69,6 +60,11 @@ def reset_snake_state():
 
     food_cell = Vector2(3,3)
     snake_direction = DIRECTION_RIGHT
+
+
+
+set_target_fps(60)
+init_window(window_size, window_size, "Snake - Hackers Guild PGH")
 
 
 
@@ -96,7 +92,6 @@ while not window_should_close():
             snake_direction = DIRECTION_UP
         if is_key_down(KEY_DOWN) and snake_direction != DIRECTION_UP:
             snake_direction = DIRECTION_DOWN
-
 
         is_snake_out_of_bounds = snake_cells[snake_head_index()].x >= grid_side_cells_count or snake_cells[snake_head_index()].x < 0 or snake_cells[snake_head_index()].y < 0 or snake_cells[snake_head_index()].y >= grid_side_cells_count
 
