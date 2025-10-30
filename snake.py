@@ -4,7 +4,7 @@ from pyray import *
 
 window_size = 640
 
-grid_side_cells_count = 16
+grid_side_cells_count = 4
 grid_cell_size = window_size / grid_side_cells_count
 grid_cells_total = grid_side_cells_count * grid_side_cells_count
 
@@ -38,7 +38,7 @@ snake_direction = DIRECTION_RIGHT
 
 food_cell = Vector2(3,3)
 
-snake_wait_to_move_duration = 0.1
+snake_wait_to_move_duration = 0.3
 snake_wait_to_move_timer = snake_wait_to_move_duration
 
 def reset_snake_state():
@@ -85,13 +85,13 @@ while not window_should_close():
     elif game_state == GAME_STATE_PLAY:
         snake_wait_to_move_timer -= dt
 
-        if (is_key_down(KEY_LEFT) or is_key_down(KEY_A)):
+        if (is_key_pressed(KEY_LEFT) or is_key_pressed(KEY_A)):
             snake_direction_request = DIRECTION_LEFT
-        if (is_key_down(KEY_RIGHT) or is_key_down(KEY_D)):
+        if (is_key_pressed(KEY_RIGHT) or is_key_pressed(KEY_D)):
             snake_direction_request = DIRECTION_RIGHT
-        if (is_key_down(KEY_UP) or is_key_down(KEY_W)):
+        if (is_key_pressed(KEY_UP) or is_key_pressed(KEY_W)):
             snake_direction_request = DIRECTION_UP
-        if (is_key_down(KEY_DOWN) or is_key_down(KEY_S)):
+        if (is_key_pressed(KEY_DOWN) or is_key_pressed(KEY_S)):
             snake_direction_request = DIRECTION_DOWN
 
         is_snake_out_of_bounds = snake_cells[snake_head_index()].x >= grid_side_cells_count or snake_cells[snake_head_index()].x < 0 or snake_cells[snake_head_index()].y < 0 or snake_cells[snake_head_index()].y >= grid_side_cells_count
@@ -179,7 +179,7 @@ while not window_should_close():
                     snake_cells[snake_head_index()].x = next_cell.x
                     snake_cells[snake_head_index()].y = next_cell.y
 
-        clear_background(GRAY)
+        clear_background(BLACK)
 
         for index, snake_cell in enumerate(snake_cells):
             rectangle = Rectangle(snake_cell.x * grid_cell_size, snake_cell.y * grid_cell_size, grid_cell_size, grid_cell_size)
