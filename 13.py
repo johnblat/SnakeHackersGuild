@@ -1,8 +1,7 @@
 # TASK:
-# IT'S TIME FOR A SNAKE!
 #
-# 1. I provided a starting snake list
-# 2. Make it so that when the snake head eats a food, the snake grows like the snake is supposed to
+# 1. The Food should never spawn on any part of the snake's body. Make that happen.
+# 2. Once the snake length is the entire grid, make snake be size of 1 (start a new games)
 
 
 

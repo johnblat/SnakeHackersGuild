@@ -6,6 +6,7 @@
 
 
 
+
 from pyray import *
 
 
@@ -35,14 +36,6 @@ def vector2_copy(orig : Vector2) -> Vector2:
     return new_vector2
 
 
-def snake_head_index(snake) -> int:
-    ret = len(snake) - 1
-    return ret
-
-def snake_head(snake) -> Vector2:
-    ret = snake[snake_head_index(snake)]
-    return ret
-
 screen_size = 500
 grid_size = 8
 max_grid_index = grid_size - 1
@@ -58,6 +51,7 @@ snake = [
     Vector2(6, 0),
     Vector2(7, 0),
 ]
+snake_head_index = len(snake) - 1 # last element
 food = random_cell(grid_size)
 
 init_window(screen_size, screen_size, "Hackers Guild - Snake Workshop")
@@ -87,23 +81,21 @@ while not window_should_close():
 
     did_snake_move = not vector2_equals(move_amount, Vector2(0,0))
     if did_snake_move:
-        new_snake_head = vector2_add(snake_head(snake), move_amount)
-        will_snake_eat_food = vector2_equals(new_snake_head, food)
-        if will_snake_eat_food:
-            snake.append(new_snake_head)
-            food = random_cell(grid_size)
-        else:
-            for i in range(0, snake_head_index(snake)):
-                snake[i] = vector2_copy(snake[i+1])
-            snake[snake_head_index(snake)] = new_snake_head
+        for i in range(0, snake_head_index):
+            snake[i] = vector2_copy(snake[i+1])
+        snake[snake_head_index] = vector2_add(snake[snake_head_index], move_amount)
+
+    did_snake_eat_food = vector2_equals(snake[snake_head_index], food)
+    if did_snake_eat_food:
+        food = random_cell(grid_size)
 
     begin_drawing()
     clear_background(SKYBLUE)
 
-    snake_head_rectangle = vector2_to_grid_rectangle(snake_head(snake), screen_size, grid_size)
+    snake_head_rectangle = vector2_to_grid_rectangle(snake[snake_head_index], screen_size, grid_size)
     draw_rectangle_rec(snake_head_rectangle, WHITE)
 
-    for i in range(0, snake_head_index(snake)):
+    for i in range(0, snake_head_index):
         snake_tail_segment_rectangle = vector2_to_grid_rectangle(snake[i], screen_size, grid_size)
         draw_rectangle_rec(snake_tail_segment_rectangle, LIGHTGRAY)
 

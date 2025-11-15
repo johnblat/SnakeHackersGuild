@@ -1,10 +1,10 @@
 # TASK:
-# IT'S TIME FOR A SNAKE!
 #
-# 1. I provided a starting snake list
-# 2. Make it so that when the snake head eats a food, the snake grows like the snake is supposed to
-
-
+# 1. The snake should "die" if:
+#    A. The snake head goes out of bounds
+#    B. The snake head touches its tail
+# 2. Make this toggleable so the dev can turn this on or off
+#    A. Display text that says "Can't die" with F2 key
 
 from pyray import *
 
@@ -43,6 +43,22 @@ def snake_head(snake) -> Vector2:
     ret = snake[snake_head_index(snake)]
     return ret
 
+def get_random_cell_not_on_snake(snake, grid_size : float) -> Vector2:
+    remaining_cells = []
+    for row_index in range(0, grid_size):
+        for col_index in range(0, grid_size):
+            cell = Vector2(row_index, col_index)
+            cell_in_snake = False
+            for _, snake_cell in enumerate(snake):
+                b = vector2_equals(cell, snake_cell)
+                cell_in_snake = cell_in_snake or b
+            if not cell_in_snake:
+                remaining_cells.append(cell)
+
+    random_index_into_remaining_cells_list = get_random_value(0, len(remaining_cells) - 1)
+    food_cell = remaining_cells[random_index_into_remaining_cells_list]
+    return food_cell
+
 screen_size = 500
 grid_size = 8
 max_grid_index = grid_size - 1
@@ -50,19 +66,14 @@ should_show_grid = False
 
 snake = [
     Vector2(0, 0),
-    Vector2(1, 0),
-    Vector2(2, 0),
-    Vector2(3, 0),
-    Vector2(4, 0),
-    Vector2(5, 0),
-    Vector2(6, 0),
-    Vector2(7, 0),
+
 ]
-food = random_cell(grid_size)
+food = get_random_cell_not_on_snake(snake, grid_size)
 
 init_window(screen_size, screen_size, "Hackers Guild - Snake Workshop")
 
 while not window_should_close():
+
     if is_key_pressed(KeyboardKey.KEY_EQUAL):
         grid_size += 1
     
@@ -91,7 +102,13 @@ while not window_should_close():
         will_snake_eat_food = vector2_equals(new_snake_head, food)
         if will_snake_eat_food:
             snake.append(new_snake_head)
-            food = random_cell(grid_size)
+            max_snake_size = grid_size * grid_size
+            did_just_win = len(snake) >= max_snake_size
+            if did_just_win:
+                snake = [
+                    Vector2(snake_head(snake).x, snake_head(snake).y)
+                ]
+            food = get_random_cell_not_on_snake(snake, grid_size)            
         else:
             for i in range(0, snake_head_index(snake)):
                 snake[i] = vector2_copy(snake[i+1])
