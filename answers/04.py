@@ -18,13 +18,13 @@ init_window(screen_width, screen_height, "Hackers Guild - Snake Workshop")
 while not window_should_close():
     begin_drawing()
 
-    clear_background(BLUE)
+    clear_background(SKYBLUE)
     
     rectangle_width = 100
     rectangle_height = 100
 
     upper_left_rectangle = Rectangle(0, 0, rectangle_width, rectangle_height)
-    draw_rectangle_rec(upper_left_rectangle, RED)
+    draw_rectangle_rec(upper_left_rectangle, PINK)
     
     upper_right_rectangle = Rectangle(
         screen_width - rectangle_width, # x
@@ -32,7 +32,7 @@ while not window_should_close():
         rectangle_width, # width
         rectangle_height # height
     )
-    draw_rectangle_rec(upper_right_rectangle, RED)
+    draw_rectangle_rec(upper_right_rectangle, PINK)
     
     bottom_left_rectangle = Rectangle(
         0, 
@@ -40,7 +40,7 @@ while not window_should_close():
         rectangle_width, 
         rectangle_height
     )
-    draw_rectangle_rec(bottom_left_rectangle, RED)
+    draw_rectangle_rec(bottom_left_rectangle, PINK)
 
     
     bottom_right_rectangle = Rectangle(
@@ -49,7 +49,7 @@ while not window_should_close():
         rectangle_width,
         rectangle_height
     )
-    draw_rectangle_rec(bottom_right_rectangle, RED)
+    draw_rectangle_rec(bottom_right_rectangle, PINK)
 
     
     center_rectangle = Rectangle(
@@ -58,7 +58,7 @@ while not window_should_close():
         rectangle_width,
         rectangle_height
     )
-    draw_rectangle_rec(center_rectangle, RED)
+    draw_rectangle_rec(center_rectangle, PINK)
 
     end_drawing()
 

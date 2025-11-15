@@ -83,7 +83,8 @@ while not window_should_close():
     if should_show_grid:
         for row_index in range(0, grid_size):
             for col_index in range(0, grid_size):
-                rectangle = vector2_to_grid_rectangle(food, screen_size, grid_size)
+                cell = Vector2(col_index, row_index)
+                rectangle = vector2_to_grid_rectangle(cell, screen_size, grid_size)
                 draw_rectangle_lines_ex(rectangle, 2, RED)
 
     

@@ -14,7 +14,7 @@ init_window(500, 500, "Hackers Guild - Snake Workshop")
 
 while not window_should_close():
     begin_drawing()
-    clear_background(BLUE)
-    draw_rectangle_rec(Rectangle(25,25,100,100))
+    clear_background(SKYBLUE)
+    draw_rectangle_rec(Rectangle(25,25,100,100), PINK)
     end_drawing()
 

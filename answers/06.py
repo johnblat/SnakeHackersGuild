@@ -29,8 +29,8 @@ while not window_should_close():
                 rectangle_size,
                 rectangle_size
             )
-            draw_rectangle_lines_ex(rectangle, 5, RED)
+            draw_rectangle_lines_ex(rectangle, 5, PINK)
 
-    clear_background(BLUE)
+    clear_background(SKYBLUE)
     end_drawing()
 
