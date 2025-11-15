@@ -79,19 +79,19 @@ while not window_should_close():
         clear_background(GRAY)
         draw_text("SNAKE", 0, 0, 60, WHITE)
         draw_text("Press Enter to Play",0, 70, 50, WHITE)
-        if is_key_pressed(KEY_ENTER):
+        if is_key_pressed(KeyboardKey.KEY_ENTER):
             game_state = GAME_STATE_PLAY
 
     elif game_state == GAME_STATE_PLAY:
         snake_wait_to_move_timer -= dt
 
-        if (is_key_pressed(KEY_LEFT) or is_key_pressed(KEY_A)):
+        if (is_key_pressed(KeyboardKey.KEY_LEFT) or is_key_pressed(KeyboardKey.KEY_A)):
             snake_direction_request = DIRECTION_LEFT
-        if (is_key_pressed(KEY_RIGHT) or is_key_pressed(KEY_D)):
+        if (is_key_pressed(KeyboardKey.KEY_RIGHT) or is_key_pressed(KeyboardKey.KEY_D)):
             snake_direction_request = DIRECTION_RIGHT
-        if (is_key_pressed(KEY_UP) or is_key_pressed(KEY_W)):
+        if (is_key_pressed(KeyboardKey.KEY_UP) or is_key_pressed(KeyboardKey.KEY_W)):
             snake_direction_request = DIRECTION_UP
-        if (is_key_pressed(KEY_DOWN) or is_key_pressed(KEY_S)):
+        if (is_key_pressed(KeyboardKey.KEY_DOWN) or is_key_pressed(KeyboardKey.KEY_S)):
             snake_direction_request = DIRECTION_DOWN
 
         is_snake_out_of_bounds = snake_cells[snake_head_index()].x >= grid_side_cells_count or snake_cells[snake_head_index()].x < 0 or snake_cells[snake_head_index()].y < 0 or snake_cells[snake_head_index()].y >= grid_side_cells_count
