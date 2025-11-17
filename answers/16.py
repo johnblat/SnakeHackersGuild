@@ -85,7 +85,6 @@ food = get_random_cell_not_on_snake(snake, grid_size)
 init_window(screen_size, screen_size, "Hackers Guild - Snake Workshop")
 
 while not window_should_close():
-
     begin_drawing()
     clear_background(SKYBLUE)
     if main_menu_active:
@@ -99,6 +98,10 @@ while not window_should_close():
             ]
             food = get_random_cell_not_on_snake(snake, grid_size)
     else:
+        if is_key_down(KeyboardKey.KEY_LEFT_SHIFT):
+            wait_duration = 0.075
+        else:
+            wait_duration = 0.1
         if is_key_pressed(KeyboardKey.KEY_ENTER):
             main_menu_active = True
 

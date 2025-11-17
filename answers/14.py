@@ -112,9 +112,7 @@ while not window_should_close():
             max_snake_size = grid_size * grid_size
             did_just_win = len(snake) >= max_snake_size
             if did_just_win:
-                snake = [
-                    Vector2(get_snake_head(snake).x, get_snake_head(snake).y)
-                ]
+                snake = [Vector2(get_snake_head(snake).x, get_snake_head(snake).y)]
             food = get_random_cell_not_on_snake(snake, grid_size)            
         else:
             for i in range(0, get_snake_head_index(snake)):
@@ -132,14 +130,10 @@ while not window_should_close():
         is_snake_head_out_of_bounds = snake_head.x >= grid_size or snake_head.x < 0 or snake_head.y >= grid_size or snake_head.y < 0
         
         if is_snake_head_out_of_bounds:
-            snake = [
-                get_random_cell(grid_size)
-            ]
+            snake = [get_random_cell(grid_size)]
             food = get_random_cell_not_on_snake(snake, grid_size)
         elif did_snake_head_collide_with_tail:
-            snake = [
-                Vector2(snake_head.x, snake_head.y)
-            ]
+            snake = [Vector2(snake_head.x, snake_head.y)]
             food = get_random_cell_not_on_snake(snake, grid_size)
     
     begin_drawing()
